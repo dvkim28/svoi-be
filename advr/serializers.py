@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from advr.models import Category, SubCategory
+from advr.models import Category, SubCategory, Ad
 
 
 class SubCategorySerializer(serializers.ModelSerializer):
@@ -15,3 +15,9 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ("title", "slug", "description", "sub_categories")
+
+
+class AdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ad
+        fields = ("__all__")
