@@ -1,13 +1,16 @@
-from django.urls import path, include
-from rest_framework import routers
+from django.urls import path
 
-from advr import views
-
-router = routers.DefaultRouter()
-router.register("categories", views.AdMainViewView)
+from advr.views import CategoryViewSet, SubCategoryViewSet
 
 urlpatterns = [
-    path("", include(router.urls)),
+    path(
+        "<slug:slug>/",
+        CategoryViewSet.as_view({'get': 'retrieve'}),
+        name="category-detail",
+    ),
+    path(
+        "<slug:category_slug>/<slug:slug>/",
+        SubCategoryViewSet.as_view({'get': 'retrieve'}),
+        name="subcategory-detail",
+    ),
 ]
-
-app_name = "store_service"

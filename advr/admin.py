@@ -1,12 +1,14 @@
 from django.contrib import admin
-
-from advr.models import Category
-
-
-# Register your models here.
+from .models import Category, SubCategory
 
 
 @admin.register(Category)
-class ItemAdmin(admin.ModelAdmin):
+class CategoryAdmin(admin.ModelAdmin):
     list_display = ("title",)
+    search_fields = ("title",)
+
+
+@admin.register(SubCategory)
+class SubCategoryAdmin(admin.ModelAdmin):
+    list_display = ("title", "category")
     search_fields = ("title",)

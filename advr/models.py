@@ -31,12 +31,30 @@ class SubCategory(models.Model):
     title = models.CharField(
         max_length=100,
     )
-    slug = models.SlugField()
+    slug = models.SlugField(
+        blank=True,
+        null=True,
+        unique=True,
+    )
     description = models.TextField()
-    category = models.ForeignKey(to=Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        to=Category,
+        on_delete=models.CASCADE,
+        related_name="sub_categories"
+    )
 
     def __str__(self):
         return f"{self.title} in {self.category}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = from_txt_to_slug(str(self.title))
+        super().save(*args, **kwargs)
+
+    class Meta:
+        ordering = ["id"]
+        verbose_name = "Sub category"
+        verbose_name_plural = "Sub categories"
 
 
 class Ad(models.Model):
