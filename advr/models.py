@@ -61,7 +61,11 @@ class Ad(models.Model):
     title = models.CharField(max_length=150)
     slug = models.SlugField()
     description = models.TextField()
-    sub_category = models.ForeignKey(to=SubCategory, on_delete=models.CASCADE)
+    sub_category = models.ForeignKey(
+        to=SubCategory,
+        on_delete=models.CASCADE,
+        related_name="ads"
+    )
     user = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE)
     price = models.DecimalField(
         max_digits=10,
